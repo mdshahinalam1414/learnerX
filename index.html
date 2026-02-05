@@ -3,137 +3,134 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sci-Fi Temperature Tracker</title>
-<meta name="description" content="Live Sci-Fi style temperature tracker with current location, time and interactive graph for the running year.">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<title>Sci-Fi Brain Games</title>
 <style>
-  body{
+  html, body {
     margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
     font-family:'Orbitron', sans-serif;
-    background:radial-gradient(circle at top,#0a0f1a,#02020a);
+    background: radial-gradient(circle at top,#0b1c2d,#02080f);
     color:#00fff7;
-    overflow-x:hidden;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
   }
-  header{
+  header {
+    position:relative;
     padding:20px;
     text-align:center;
+    text-shadow: 0 0 15px #00fff7;
+  }
+  header h1 {
+    font-size:2.5rem;
+  }
+  #datetime {
+    position:absolute;
+    top:20px;
+    left:20px;
+    font-family:'Courier New', monospace;
+    font-weight:bold;
+    color:#ff00ff;
+    text-shadow: 0 0 10px #ff00ff;
+  }
+  nav {
+    position:absolute;
+    top:20px;
+    right:20px;
+  }
+  nav a {
+    text-decoration:none;
     color:#00fff7;
-    text-shadow:0 0 10px #00fff7,0 0 20px #00fff7;
-  }
-  header h1{font-size:2.5rem;}
-  #datetime{
-    font-size:1.1rem;
-    margin-top:5px;
+    margin-left:15px;
+    font-weight:bold;
     text-shadow:0 0 6px #00fff7;
+    transition:0.3s;
   }
-  main{
-    max-width:1000px;
-    margin:40px auto;
-    padding:0 20px;
+  nav a:hover {
+    color:#ff00ff;
+    text-shadow:0 0 12px #ff00ff;
   }
-  #temp{
-    font-size:1.3rem;
-    margin-bottom:20px;
-    text-align:center;
-    text-shadow:0 0 6px #ffdd00;
+  main {
+    flex:1;
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+    gap:20px;
+    padding:20px;
+    overflow-y:auto;
   }
-  canvas{
-    background:rgba(0,0,0,0.6);
+  .game-card {
+    background: rgba(0,20,40,0.85);
+    border:1px solid #00fff7;
     border-radius:15px;
-    box-shadow:0 0 25px rgba(0,255,255,0.5);
-  }
-  footer{
+    padding:25px;
     text-align:center;
-    padding:20px;
+    text-decoration:none;
     color:#00fff7;
-    text-shadow:0 0 6px #00fff7;
+    font-size:1.3rem;
+    font-weight:bold;
+    box-shadow:0 0 25px #00fff7;
+    transition:0.3s;
+  }
+  .game-card:hover {
+    transform: translateY(-5px);
+    box-shadow:0 0 35px #ff00ff;
+  }
+  #author {
+    text-align:right;
+    padding:10px 20px;
+    font-size:1rem;
+    color:#ffffff;
+    text-shadow:none;
+  }
+  footer {
+    text-align:center;
+    padding:15px 10px;
+    font-size:0.9rem;
+    color:#00fff7;
+    text-shadow:0 0 8px #00fff7;
+    background: rgba(0,0,0,0.4);
   }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>Temperature Tracker • Sci-Fi Style</h1>
-  <div id="datetime">Loading Date & Time...</div>
+  <h1>Sci-Fi Brain Games</h1>
+  <div id="datetime">Loading...</div>
+  <nav>
+    <a href="about.html">About</a>
+  </nav>
 </header>
 
 <main>
-  <div id="temp">Loading Temperature...</div>
-  <canvas id="tempChart" width="1000" height="400"></canvas>
+  <a class="game-card" href="game1.html">Game 1</a>
+  <a class="game-card" href="game2.html">Game 2</a>
+  <a class="game-card" href="game3.html">Game 3</a>
+  <a class="game-card" href="game4.html">Game 4</a>
+  <a class="game-card" href="game5.html">Game 5</a>
+  <a class="game-card" href="game6.html">Game 6</a>
+  <a class="game-card" href="game7.html">Game 7</a>
+  <a class="game-card" href="game8.html">Game 8</a>
+  <a class="game-card" href="game9.html">Game 9</a>
+  <a class="game-card" href="game10.html">Game 10</a>
 </main>
 
+<div id="author">Md. Shahin Alam</div>
 <footer>
-  © 2045 • Sci-Fi Weather Insights
+  <span style="color:#ffffff;">Nayanpur, Rajendrapur Cantt, Gazipur Sadar, Gazipur • mdshahinalam1414@gmail.com</span>
 </footer>
 
 <script>
-  // Update Date & Time live
   function updateDateTime(){
     const now = new Date();
-    const time = now.toLocaleTimeString('en-US',{hour12:false});
-    const date = now.toLocaleDateString('en-US',{weekday:'short', month:'short', day:'numeric', year:'numeric'});
-    document.getElementById('datetime').innerHTML = `${date} • ${time}`;
+    const date = now.toLocaleDateString('en-US', {weekday:'short', month:'short', day:'numeric', year:'numeric'});
+    const time = now.toLocaleTimeString('en-US', {hour12:false});
+    document.getElementById('datetime').innerHTML = date + ' • ' + time;
   }
   setInterval(updateDateTime,1000);
   updateDateTime();
-
-  // Chart.js setup
-  const ctx = document.getElementById('tempChart').getContext('2d');
-  const tempData = {
-    labels: [], // dates
-    datasets: [{
-      label:'Temperature (°C)',
-      data: [],
-      borderColor:'#ffdd00',
-      backgroundColor:'rgba(255,221,0,0.2)',
-      tension:0.3,
-      fill:true,
-      pointRadius:3,
-      pointHoverRadius:6,
-    }]
-  };
-  const config = {
-    type:'line',
-    data:tempData,
-    options:{
-      responsive:true,
-      plugins:{legend:{display:true, labels:{color:'#00fff7'}}},
-      scales:{
-        x:{ticks:{color:'#00fff7'}},
-        y:{ticks:{color:'#00fff7'}}
-      }
-    }
-  };
-  const tempChart = new Chart(ctx,config);
-
-  // Fetch current location temperature & add to chart
-  async function fetchTemperature(){
-    if(navigator.geolocation){
-      navigator.geolocation.getCurrentPosition(async position=>{
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
-        const apiKey = 'YOUR_OPENWEATHERMAP_API_KEY'; // <-- put your key here
-        const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&units=metric&appid=${apiKey}`;
-        const res = await fetch(url);
-        const data = await res.json();
-        const todayTemp = data.current.temp;
-        document.getElementById('temp').innerHTML = `Current Temperature: ${todayTemp.toFixed(1)}°C`;
-
-        // Build 1 year labels for running year (only for demo, random temp)
-        const start = new Date(new Date().getFullYear(),0,1);
-        for(let i=0;i<365;i++){
-          const d = new Date(start);
-          d.setDate(d.getDate()+i);
-          tempData.labels.push(d.toLocaleDateString('en-US',{month:'short',day:'numeric'}));
-          tempData.datasets[0].data.push((Math.random()*10+15).toFixed(1)); // random demo temp
-        }
-        tempChart.update();
-      });
-    }else{
-      document.getElementById('temp').innerHTML = 'Geolocation not supported';
-    }
-  }
-  fetchTemperature();
 </script>
 
 </body>
