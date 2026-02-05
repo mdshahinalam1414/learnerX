@@ -1,142 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LearnerX • Explore Knowledge Beyond Limits</title>
-  <meta name="description" content="LearnerX is a futuristic educational platform offering interactive learning, quizzes, famous personality database, blogs, and more for curious minds.">
-  <meta name="keywords" content="LearnerX, Sci-Fi Learning, Education, Quizzes, Famous Personalities, Blogs, Knowledge, Interactive Learning">
-  <meta name="author" content="LearnerX Initiative">
-  <link rel="icon" href="favicon.ico">
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,sans-serif;}
-    body{background:radial-gradient(circle at top,#0b1c2d,#02080f 70%);color:#e6f1ff;}
-    header{padding:40px 20px;text-align:center;position:relative;}
-    header h1{font-size:3rem;color:#6cf6ff;text-shadow:0 0 25px rgba(108,246,255,.6);}
-    header p{margin-top:10px;color:#b6d9ff;font-size:1.2rem;font-style:italic;}
-    #datetime{position:absolute;top:20px;right:20px;color:#6cf6ff;font-weight:bold;}
-    nav{display:flex;justify-content:center;gap:20px;margin-top:25px;flex-wrap:wrap;}
-    nav a{text-decoration:none;color:#e6f1ff;padding:10px 18px;border:1px solid #2d6cff;border-radius:20px;transition:.3s;box-shadow:0 0 12px rgba(45,108,255,.3);}
-    nav a:hover{background:#2d6cff;box-shadow:0 0 25px rgba(45,108,255,.8);}
-    main{padding:50px 20px;max-width:1100px;margin:auto;}
-    section{margin-bottom:70px;}
-    h2{color:#6cf6ff;margin-bottom:20px;}
-    p{color:#c9e4ff;line-height:1.6;font-size:1rem;}
-    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:25px;}
-    .card{background:rgba(10,25,45,.75);border:1px solid rgba(108,246,255,.25);border-radius:18px;padding:25px;box-shadow:0 0 25px rgba(0,0,0,.6);transition:.3s;}
-    .card:hover{transform:translateY(-6px);box-shadow:0 0 35px rgba(108,246,255,.4);}
-    .card h3{color:#6cf6ff;margin-bottom:10px;}
-    .card p{color:#c9e4ff;}
-    .quiz button{margin-top:15px;padding:12px 22px;border:none;border-radius:20px;background:#2d6cff;color:#fff;cursor:pointer;box-shadow:0 0 18px rgba(45,108,255,.6);transition:.3s;font-size:1rem;}
-    .quiz button:hover{background:#6cf6ff;color:#02131f;}
-    footer{text-align:center;padding:25px 15px;margin-top:50px;color:#9ecbff;font-size:.9rem;border-top:1px solid rgba(108,246,255,.2);}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sci-Fi Temperature Tracker</title>
+<meta name="description" content="Live Sci-Fi style temperature tracker with current location, time and interactive graph for the running year.">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  body{
+    margin:0;
+    font-family:'Orbitron', sans-serif;
+    background:radial-gradient(circle at top,#0a0f1a,#02020a);
+    color:#00fff7;
+    overflow-x:hidden;
+  }
+  header{
+    padding:20px;
+    text-align:center;
+    color:#00fff7;
+    text-shadow:0 0 10px #00fff7,0 0 20px #00fff7;
+  }
+  header h1{font-size:2.5rem;}
+  #datetime{
+    font-size:1.1rem;
+    margin-top:5px;
+    text-shadow:0 0 6px #00fff7;
+  }
+  main{
+    max-width:1000px;
+    margin:40px auto;
+    padding:0 20px;
+  }
+  #temp{
+    font-size:1.3rem;
+    margin-bottom:20px;
+    text-align:center;
+    text-shadow:0 0 6px #ffdd00;
+  }
+  canvas{
+    background:rgba(0,0,0,0.6);
+    border-radius:15px;
+    box-shadow:0 0 25px rgba(0,255,255,0.5);
+  }
+  footer{
+    text-align:center;
+    padding:20px;
+    color:#00fff7;
+    text-shadow:0 0 6px #00fff7;
+  }
+</style>
 </head>
 <body>
 
 <header>
-  <h1>LearnerX</h1>
-  <p>"Explore Knowledge Beyond Limits"</p>
-  <div id="datetime"></div>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="database.html">Famous Personalities</a>
-    <a href="insight.html">Insights</a>
-    <a href="quiz.html">Quizzes</a>
-  </nav>
+  <h1>Temperature Tracker • Sci-Fi Style</h1>
+  <div id="datetime">Loading Date & Time...</div>
 </header>
 
 <main>
-  <!-- Home Section -->
-  <section id="home">
-    <h2>Welcome to LearnerX</h2>
-    <p>LearnerX is your futuristic educational platform offering interactive courses, a famous personality database, insightful blogs, and challenging quizzes to ignite your curiosity.</p>
-  </section>
-
-  <!-- About Section -->
-  <section id="about">
-    <h2>About LearnerX</h2>
-    <p>LearnerX is designed for learners who aim to explore knowledge beyond conventional limits. Engage in interactive learning, read inspiring stories, and test your skills through fun quizzes.</p>
-  </section>
-
-  <!-- Database Section -->
-  <section id="database">
-    <h2>Famous Personalities Database</h2>
-    <div class="cards">
-      <div class="card">
-        <h3>Albert Einstein</h3>
-        <p>Theoretical physicist known for the theory of relativity and contributions to quantum mechanics.</p>
-      </div>
-      <div class="card">
-        <h3>Marie Curie</h3>
-        <p>Pioneer in radioactivity research, first woman to win a Nobel Prize and only person to win in two sciences.</p>
-      </div>
-      <div class="card">
-        <h3>Isaac Newton</h3>
-        <p>Formulated the laws of motion and universal gravitation, laying the foundation of classical mechanics.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Posts / Blogs Section -->
-  <section id="insight">
-    <h2>Insights & Articles</h2>
-    <div class="cards">
-      <div class="card">
-        <h3>The Quantum Realm</h3>
-        <p>Discover the mysteries of quantum physics explained in a simple and futuristic way.</p>
-      </div>
-      <div class="card">
-        <h3>AI for the Future</h3>
-        <p>Learn how artificial intelligence shapes our world and the possibilities it offers for education.</p>
-      </div>
-      <div class="card">
-        <h3>Exploring Space</h3>
-        <p>Engage with the universe, learn about black holes, galaxies, and our place in the cosmos.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Quiz Section -->
-  <section id="quiz" class="quiz">
-    <h2>Try a Quick Quiz</h2>
-    <p>Click the button to start a fun knowledge challenge!</p>
-    <button onclick="startQuiz()">Start Quiz</button>
-    <p id="quizResult"></p>
-  </section>
+  <div id="temp">Loading Temperature...</div>
+  <canvas id="tempChart" width="1000" height="400"></canvas>
 </main>
 
 <footer>
-  © 2045 • LearnerX Initiative • Knowledge Beyond Limits
+  © 2045 • Sci-Fi Weather Insights
 </footer>
 
 <script>
-  // Date & Time
+  // Update Date & Time live
   function updateDateTime(){
-    const now=new Date();
-    const datetime=now.toLocaleString();
-    document.getElementById('datetime').innerText=datetime;
+    const now = new Date();
+    const time = now.toLocaleTimeString('en-US',{hour12:false});
+    const date = now.toLocaleDateString('en-US',{weekday:'short', month:'short', day:'numeric', year:'numeric'});
+    document.getElementById('datetime').innerHTML = `${date} • ${time}`;
   }
   setInterval(updateDateTime,1000);
   updateDateTime();
 
-  // Quiz Function
-  function startQuiz(){
-    const questions=[
-      {q:"Who developed the theory of relativity?", a:"Albert Einstein"},
-      {q:"Who pioneered radioactivity research?", a:"Marie Curie"},
-      {q:"Who formulated laws of motion?", a:"Isaac Newton"}
-    ];
-    const rand=Math.floor(Math.random()*questions.length);
-    const result=document.getElementById('quizResult');
-    const answer=prompt(questions[rand].q);
-    if(answer && answer.toLowerCase()===questions[rand].a.toLowerCase()){
-      result.innerText="Correct! Well done 🌟";
+  // Chart.js setup
+  const ctx = document.getElementById('tempChart').getContext('2d');
+  const tempData = {
+    labels: [], // dates
+    datasets: [{
+      label:'Temperature (°C)',
+      data: [],
+      borderColor:'#ffdd00',
+      backgroundColor:'rgba(255,221,0,0.2)',
+      tension:0.3,
+      fill:true,
+      pointRadius:3,
+      pointHoverRadius:6,
+    }]
+  };
+  const config = {
+    type:'line',
+    data:tempData,
+    options:{
+      responsive:true,
+      plugins:{legend:{display:true, labels:{color:'#00fff7'}}},
+      scales:{
+        x:{ticks:{color:'#00fff7'}},
+        y:{ticks:{color:'#00fff7'}}
+      }
+    }
+  };
+  const tempChart = new Chart(ctx,config);
+
+  // Fetch current location temperature & add to chart
+  async function fetchTemperature(){
+    if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition(async position=>{
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        const apiKey = 'YOUR_OPENWEATHERMAP_API_KEY'; // <-- put your key here
+        const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&units=metric&appid=${apiKey}`;
+        const res = await fetch(url);
+        const data = await res.json();
+        const todayTemp = data.current.temp;
+        document.getElementById('temp').innerHTML = `Current Temperature: ${todayTemp.toFixed(1)}°C`;
+
+        // Build 1 year labels for running year (only for demo, random temp)
+        const start = new Date(new Date().getFullYear(),0,1);
+        for(let i=0;i<365;i++){
+          const d = new Date(start);
+          d.setDate(d.getDate()+i);
+          tempData.labels.push(d.toLocaleDateString('en-US',{month:'short',day:'numeric'}));
+          tempData.datasets[0].data.push((Math.random()*10+15).toFixed(1)); // random demo temp
+        }
+        tempChart.update();
+      });
     }else{
-      result.innerText=`Wrong! Correct answer: ${questions[rand].a}`;
+      document.getElementById('temp').innerHTML = 'Geolocation not supported';
     }
   }
+  fetchTemperature();
 </script>
 
 </body>
