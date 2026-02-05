@@ -66,6 +66,9 @@
     border-radius:15px;
     padding:25px;
     text-align:center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
     text-decoration:none;
     color:#00fff7;
     font-size:1.3rem;
@@ -88,38 +91,44 @@
     text-align:center;
     padding:15px 10px;
     font-size:0.9rem;
-    color:#00fff7;
-    text-shadow:0 0 8px #00fff7;
+    color:#ffffff;
     background: rgba(0,0,0,0.4);
   }
 </style>
 </head>
 <body>
 
+<audio id="bgMusic" loop autoplay>
+  <source src="background-music.mp3" type="audio/mpeg">
+</audio>
+<audio id="clickSound">
+  <source src="click.mp3" type="audio/mpeg">
+</audio>
+
 <header>
   <h1>Brain Games</h1>
   <div id="datetime">Loading...</div>
   <nav>
-    <a href="about.html">About</a>
+    <a href="about.html" onclick="playClick()">About</a>
   </nav>
 </header>
 
 <main>
-  <a class="game-card" href="game1.html">Game 1</a>
-  <a class="game-card" href="game2.html">Game 2</a>
-  <a class="game-card" href="game3.html">Game 3</a>
-  <a class="game-card" href="game4.html">Game 4</a>
-  <a class="game-card" href="game5.html">Game 5</a>
-  <a class="game-card" href="game6.html">Game 6</a>
-  <a class="game-card" href="game7.html">Game 7</a>
-  <a class="game-card" href="game8.html">Game 8</a>
-  <a class="game-card" href="game9.html">Game 9</a>
-  <a class="game-card" href="game10.html">Game 10</a>
+  <a class="game-card" href="game1.html" onclick="playClick()">Game 1</a>
+  <a class="game-card" href="game2.html" onclick="playClick()">Game 2</a>
+  <a class="game-card" href="game3.html" onclick="playClick()">Game 3</a>
+  <a class="game-card" href="game4.html" onclick="playClick()">Game 4</a>
+  <a class="game-card" href="game5.html" onclick="playClick()">Game 5</a>
+  <a class="game-card" href="game6.html" onclick="playClick()">Game 6</a>
+  <a class="game-card" href="game7.html" onclick="playClick()">Game 7</a>
+  <a class="game-card" href="game8.html" onclick="playClick()">Game 8</a>
+  <a class="game-card" href="game9.html" onclick="playClick()">Game 9</a>
+  <a class="game-card" href="game10.html" onclick="playClick()">Game 10</a>
 </main>
 
 <div id="author">Md. Shahin Alam</div>
 <footer>
-  <span style="color:#ffffff;">Nayanpur, Rajendrapur Cantt, Gazipur Sadar, Gazipur • mdshahinalam1414@gmail.com</span>
+  Nayanpur, Rajendrapur Cantt, Gazipur Sadar, Gazipur • mdshahinalam1414@gmail.com
 </footer>
 
 <script>
@@ -131,6 +140,12 @@
   }
   setInterval(updateDateTime,1000);
   updateDateTime();
+
+  function playClick(){
+    const clickAudio = document.getElementById('clickSound');
+    clickAudio.currentTime=0;
+    clickAudio.play();
+  }
 </script>
 
 </body>
