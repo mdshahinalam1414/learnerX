@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Brain Math Game</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #333;
+    }
+
+    .game-box {
+        background: #fff;
+        width: 350px;
+        padding: 25px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    }
+
+    h2 {
+        margin-bottom: 10px;
+    }
+
+    .question {
+        font-size: 22px;
+        margin: 15px 0;
+    }
+
+    input {
+        width: 80%;
+        padding: 10px;
+        font-size: 18px;
+        text-align: center;
+    }
+
+    button {
+        margin-top: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 6px;
+        background: #4CAF50;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #43a047;
+    }
+
+    .info {
+        margin-top: 10px;
+        font-weight: bold;
+    }
+
+    .timer {
+        color: #e53935;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="game-box">
+    <h2>🧠 Brain Math Game</h2>
+
+    <div class="question" id="question">Press Start</div>
+
+    <input type="number" id="answer" placeholder="Your Answer" disabled>
+
+    <br>
+    <button onclick="startGame()">Start</button>
+    <button onclick="checkAnswer()">Submit</button>
+
+    <div class="info">Score: <span id="score">0</span></div>
+    <div class="info">Level: <span id="level">1</span></div>
+    <div class="info timer">Time: <span id="time">10</span>s</div>
+</div>
+
+<script>
+    let num1, num2, correct;
+    let score = 0;
+    let level = 1;
+    let timeLeft = 10;
+    let timer;
+
+    function startGame() {
+        score = 0;
+        level = 1;
+        document.getElementById("score").innerText = score;
+        document.getElementById("level").innerText = level;
+        document.getElementById("answer").disabled = false;
+        nextQuestion();
+        startTimer();
+    }
+
+    function nextQuestion() {
+        const max = level * 10;
+        num1 = Math.floor(Math.random() * max) + 1;
+        num2 = Math.floor(Math.random() * max) + 1;
+
+        const operators = ["+", "-", "*"];
+        const op = operators[Math.floor(Math.random() * operators.length)];
+
+        if (op === "+") correct = num1 + num2;
+        if (op === "-") correct = num1 - num2;
+        if (op === "*") correct = num1 * num2;
+
+        document.getElementById("question").innerText =
+            `${num1} ${op} ${num2} = ?`;
+
+        document.getElementById("answer").value = "";
+        timeLeft = 10;
+    }
+
+    function checkAnswer() {
+        const userAns = document.getElementById("answer").value;
+
+        if (userAns == correct) {
+            score++;
+            if (score % 5 === 0) level++;
+            document.getElementById("score").innerText = score;
+            document.getElementById("level").innerText = level;
+            nextQuestion();
+        } else {
+            gameOver();
+        }
+    }
+
+    function startTimer() {
+        clearInterval(timer);
+        timer = setInterval(() => {
+            timeLeft--;
+            document.getElementById("time").innerText = timeLeft;
+            if (timeLeft <= 0) {
+                gameOver();
+            }
+        }, 1000);
+    }
+
+    function gameOver() {
+        clearInterval(timer);
+        document.getElementById("question").innerText = "❌ Game Over";
+        document.getElementById("answer").disabled = true;
+        alert("Game Over! Your Score: " + score);
+    }
+</script>
+
+</body>
+</html>
