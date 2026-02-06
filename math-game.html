@@ -5,64 +5,94 @@
 <title>Brain Math Game</title>
 
 <style>
+    * {
+        box-sizing: border-box;
+    }
+
     body {
         margin: 0;
-        font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #667eea, #764ba2);
+        font-family: 'Segoe UI', sans-serif;
+        background: radial-gradient(circle at top, #1d2671, #c33764);
         height: 100vh;
         display: flex;
         justify-content: center;
         align-items: center;
-        color: #333;
+        color: #fff;
+        overflow: hidden;
     }
 
     .game-box {
-        background: #fff;
-        width: 350px;
+        background: rgba(255, 255, 255, 0.12);
+        backdrop-filter: blur(10px);
+        width: 360px;
         padding: 25px;
-        border-radius: 12px;
+        border-radius: 16px;
         text-align: center;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        border: 1px solid rgba(255,255,255,0.2);
     }
 
     h2 {
+        margin: 0;
         margin-bottom: 10px;
+        letter-spacing: 1px;
     }
 
     .question {
-        font-size: 22px;
-        margin: 15px 0;
+        font-size: 26px;
+        margin: 20px 0;
+        font-weight: bold;
     }
 
     input {
         width: 80%;
-        padding: 10px;
-        font-size: 18px;
+        padding: 12px;
+        font-size: 20px;
         text-align: center;
+        border-radius: 10px;
+        border: none;
+        outline: none;
+    }
+
+    .btns {
+        margin-top: 15px;
     }
 
     button {
-        margin-top: 10px;
-        padding: 10px 20px;
+        padding: 10px 22px;
         font-size: 16px;
         border: none;
-        border-radius: 6px;
-        background: #4CAF50;
-        color: #fff;
+        border-radius: 20px;
+        background: linear-gradient(45deg, #00c6ff, #0072ff);
+        color: white;
         cursor: pointer;
+        margin: 5px;
+        transition: transform 0.2s, box-shadow 0.2s;
     }
 
     button:hover {
-        background: #43a047;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.3);
     }
 
-    .info {
-        margin-top: 10px;
+    .info-box {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 15px;
         font-weight: bold;
+        font-size: 14px;
     }
 
     .timer {
-        color: #e53935;
+        color: #ffeb3b;
+    }
+
+    .credit {
+        position: absolute;
+        bottom: 10px;
+        right: 15px;
+        font-size: 12px;
+        opacity: 0.8;
     }
 </style>
 </head>
@@ -76,14 +106,19 @@
 
     <input type="number" id="answer" placeholder="Your Answer" disabled>
 
-    <br>
-    <button onclick="startGame()">Start</button>
-    <button onclick="checkAnswer()">Submit</button>
+    <div class="btns">
+        <button onclick="startGame()">Start</button>
+        <button onclick="checkAnswer()">Submit</button>
+    </div>
 
-    <div class="info">Score: <span id="score">0</span></div>
-    <div class="info">Level: <span id="level">1</span></div>
-    <div class="info timer">Time: <span id="time">10</span>s</div>
+    <div class="info-box">
+        <div>Score: <span id="score">0</span></div>
+        <div>Level: <span id="level">1</span></div>
+        <div class="timer">⏱ <span id="time">10</span>s</div>
+    </div>
 </div>
+
+<div class="credit">© Md. Shahin Alam</div>
 
 <script>
     let num1, num2, correct;
@@ -95,8 +130,7 @@
     function startGame() {
         score = 0;
         level = 1;
-        document.getElementById("score").innerText = score;
-        document.getElementById("level").innerText = level;
+        updateUI();
         document.getElementById("answer").disabled = false;
         nextQuestion();
         startTimer();
@@ -107,8 +141,8 @@
         num1 = Math.floor(Math.random() * max) + 1;
         num2 = Math.floor(Math.random() * max) + 1;
 
-        const operators = ["+", "-", "*"];
-        const op = operators[Math.floor(Math.random() * operators.length)];
+        const ops = ["+", "-", "*"];
+        const op = ops[Math.floor(Math.random() * ops.length)];
 
         if (op === "+") correct = num1 + num2;
         if (op === "-") correct = num1 - num2;
@@ -122,13 +156,12 @@
     }
 
     function checkAnswer() {
-        const userAns = document.getElementById("answer").value;
+        const ans = document.getElementById("answer").value;
 
-        if (userAns == correct) {
+        if (ans == correct) {
             score++;
             if (score % 5 === 0) level++;
-            document.getElementById("score").innerText = score;
-            document.getElementById("level").innerText = level;
+            updateUI();
             nextQuestion();
         } else {
             gameOver();
@@ -144,6 +177,12 @@
                 gameOver();
             }
         }, 1000);
+    }
+
+    function updateUI() {
+        document.getElementById("score").innerText = score;
+        document.getElementById("level").innerText = level;
+        document.getElementById("time").innerText = timeLeft;
     }
 
     function gameOver() {
