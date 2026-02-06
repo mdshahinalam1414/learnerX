@@ -2,195 +2,150 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Brain Math Game</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brain Games</title>
 <style>
-    * {
-        box-sizing: border-box;
-    }
-
-    body {
-        margin: 0;
-        font-family: 'Segoe UI', sans-serif;
-        background: radial-gradient(circle at top, #1d2671, #c33764);
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #fff;
-        overflow: hidden;
-    }
-
-    .game-box {
-        background: rgba(255, 255, 255, 0.12);
-        backdrop-filter: blur(10px);
-        width: 360px;
-        padding: 25px;
-        border-radius: 16px;
-        text-align: center;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        border: 1px solid rgba(255,255,255,0.2);
-    }
-
-    h2 {
-        margin: 0;
-        margin-bottom: 10px;
-        letter-spacing: 1px;
-    }
-
-    .question {
-        font-size: 26px;
-        margin: 20px 0;
-        font-weight: bold;
-    }
-
-    input {
-        width: 80%;
-        padding: 12px;
-        font-size: 20px;
-        text-align: center;
-        border-radius: 10px;
-        border: none;
-        outline: none;
-    }
-
-    .btns {
-        margin-top: 15px;
-    }
-
-    button {
-        padding: 10px 22px;
-        font-size: 16px;
-        border: none;
-        border-radius: 20px;
-        background: linear-gradient(45deg, #00c6ff, #0072ff);
-        color: white;
-        cursor: pointer;
-        margin: 5px;
-        transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-    }
-
-    .info-box {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 15px;
-        font-weight: bold;
-        font-size: 14px;
-    }
-
-    .timer {
-        color: #ffeb3b;
-    }
-
-    .credit {
-        position: absolute;
-        bottom: 10px;
-        right: 15px;
-        font-size: 12px;
-        opacity: 0.8;
-    }
+  html, body {
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    font-family:'Orbitron', sans-serif;
+    background: radial-gradient(circle at top,#0b1c2d,#02080f);
+    color:#00fff7;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+  }
+  header {
+    position:relative;
+    padding:20px;
+    text-align:center;
+    text-shadow: 0 0 15px #00fff7;
+  }
+  header h1 {
+    font-size:2.5rem;
+  }
+  #datetime {
+    position:absolute;
+    top:20px;
+    left:20px;
+    font-family:'Courier New', monospace;
+    font-weight:bold;
+    color:#ff00ff;
+    text-shadow: 0 0 10px #ff00ff;
+  }
+  nav {
+    position:absolute;
+    top:20px;
+    right:20px;
+  }
+  nav a {
+    text-decoration:none;
+    color:#00fff7;
+    margin-left:15px;
+    font-weight:bold;
+    text-shadow:0 0 6px #00fff7;
+    transition:0.3s;
+  }
+  nav a:hover {
+    color:#ff00ff;
+    text-shadow:0 0 12px #ff00ff;
+  }
+  main {
+    flex:1;
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+    gap:20px;
+    padding:20px;
+    overflow-y:auto;
+  }
+  .game-card {
+    background: rgba(0,20,40,0.85);
+    border:1px solid #00fff7;
+    border-radius:15px;
+    padding:25px;
+    text-align:center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-decoration:none;
+    color:#00fff7;
+    font-size:1.3rem;
+    font-weight:bold;
+    box-shadow:0 0 25px #00fff7;
+    transition:0.3s;
+  }
+  .game-card:hover {
+    transform: translateY(-5px);
+    box-shadow:0 0 35px #ff00ff;
+  }
+  #author {
+    text-align:right;
+    padding:10px 20px;
+    font-size:1rem;
+    color:#ffffff;
+    text-shadow:none;
+  }
+  footer {
+    text-align:center;
+    padding:15px 10px;
+    font-size:0.9rem;
+    color:#ffffff;
+    background: rgba(0,0,0,0.4);
+  }
 </style>
 </head>
-
 <body>
 
-<div class="game-box">
-    <h2>🧠 Brain Math Game</h2>
+<audio id="bgMusic" loop autoplay>
+  <source src="background-music.mp3" type="audio/mpeg">
+</audio>
+<audio id="clickSound">
+  <source src="click.mp3" type="audio/mpeg">
+</audio>
 
-    <div class="question" id="question">Press Start</div>
+<header>
+  <h1>Brain Games</h1>
+  <div id="datetime">Loading...</div>
+  <nav>
+    <a href="about.html" onclick="playClick()">About</a>
+  </nav>
+</header>
 
-    <input type="number" id="answer" placeholder="Your Answer" disabled>
+<main>
+  <a class="game-card" href="game1.html" onclick="playClick()">Game 1</a>
+  <a class="game-card" href="game2.html" onclick="playClick()">Game 2</a>
+  <a class="game-card" href="game3.html" onclick="playClick()">Game 3</a>
+  <a class="game-card" href="game4.html" onclick="playClick()">Game 4</a>
+  <a class="game-card" href="game5.html" onclick="playClick()">Game 5</a>
+  <a class="game-card" href="game6.html" onclick="playClick()">Game 6</a>
+  <a class="game-card" href="game7.html" onclick="playClick()">Game 7</a>
+  <a class="game-card" href="game8.html" onclick="playClick()">Game 8</a>
+  <a class="game-card" href="game9.html" onclick="playClick()">Game 9</a>
+  <a class="game-card" href="game10.html" onclick="playClick()">Game 10</a>
+</main>
 
-    <div class="btns">
-        <button onclick="startGame()">Start</button>
-        <button onclick="checkAnswer()">Submit</button>
-    </div>
-
-    <div class="info-box">
-        <div>Score: <span id="score">0</span></div>
-        <div>Level: <span id="level">1</span></div>
-        <div class="timer">⏱ <span id="time">10</span>s</div>
-    </div>
-</div>
-
-<div class="credit">© Md. Shahin Alam</div>
+<div id="author">Md. Shahin Alam</div>
+<footer>
+  Nayanpur, Rajendrapur Cantt, Gazipur Sadar, Gazipur • mdshahinalam1414@gmail.com
+</footer>
 
 <script>
-    let num1, num2, correct;
-    let score = 0;
-    let level = 1;
-    let timeLeft = 10;
-    let timer;
+  function updateDateTime(){
+    const now = new Date();
+    const date = now.toLocaleDateString('en-US', {weekday:'short', month:'short', day:'numeric', year:'numeric'});
+    const time = now.toLocaleTimeString('en-US', {hour12:false});
+    document.getElementById('datetime').innerHTML = date + ' • ' + time;
+  }
+  setInterval(updateDateTime,1000);
+  updateDateTime();
 
-    function startGame() {
-        score = 0;
-        level = 1;
-        updateUI();
-        document.getElementById("answer").disabled = false;
-        nextQuestion();
-        startTimer();
-    }
-
-    function nextQuestion() {
-        const max = level * 10;
-        num1 = Math.floor(Math.random() * max) + 1;
-        num2 = Math.floor(Math.random() * max) + 1;
-
-        const ops = ["+", "-", "*"];
-        const op = ops[Math.floor(Math.random() * ops.length)];
-
-        if (op === "+") correct = num1 + num2;
-        if (op === "-") correct = num1 - num2;
-        if (op === "*") correct = num1 * num2;
-
-        document.getElementById("question").innerText =
-            `${num1} ${op} ${num2} = ?`;
-
-        document.getElementById("answer").value = "";
-        timeLeft = 10;
-    }
-
-    function checkAnswer() {
-        const ans = document.getElementById("answer").value;
-
-        if (ans == correct) {
-            score++;
-            if (score % 5 === 0) level++;
-            updateUI();
-            nextQuestion();
-        } else {
-            gameOver();
-        }
-    }
-
-    function startTimer() {
-        clearInterval(timer);
-        timer = setInterval(() => {
-            timeLeft--;
-            document.getElementById("time").innerText = timeLeft;
-            if (timeLeft <= 0) {
-                gameOver();
-            }
-        }, 1000);
-    }
-
-    function updateUI() {
-        document.getElementById("score").innerText = score;
-        document.getElementById("level").innerText = level;
-        document.getElementById("time").innerText = timeLeft;
-    }
-
-    function gameOver() {
-        clearInterval(timer);
-        document.getElementById("question").innerText = "❌ Game Over";
-        document.getElementById("answer").disabled = true;
-        alert("Game Over! Your Score: " + score);
-    }
+  function playClick(){
+    const clickAudio = document.getElementById('clickSound');
+    clickAudio.currentTime=0;
+    clickAudio.play();
+  }
 </script>
 
 </body>
